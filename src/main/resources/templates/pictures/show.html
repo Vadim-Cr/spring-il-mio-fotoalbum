@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/resources :: headResources('Show Picture')"></head>
+<body>
+<nav th:replace="fragments/navigationBar :: topNavigationBar('pictures')"></nav>
+
+<div class="container"
+     th:object="${picture}">
+
+    <!--***************** CREAMO LA CARD PER L'IMMAGINE SU CUI HAI CLICCATO *********************-->
+    <div class="card p-3 mx-3">
+        <h1 class="text-center my-3" th:text="*{title}"></h1>
+        <img class="object-fit-contain h-50" th:src="*{url}" th:alt="*{title}">
+        <p th:text="${#strings.defaultString(picture.description, 'No description available')}"></p>
+
+        <!--********************* BOTTONE PER TORNARE ALLA LISTA DI IMMAGINI ************************-->
+        <a class="btn btn-info"
+           style="max-width: 5rem;"
+           th:href="@{/pictures}">
+            <i class="fa-solid fa-circle-chevron-left"></i>
+        </a>
+    </div>
+</div>
+</body>
+</html>

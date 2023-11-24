@@ -1,24 +1,49 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Picture List</title>
-</head>
+<head th:insert="fragments/resources :: headResources('Picture List')"></head>
 <body>
+<!--*************** Qui abbiamo la bara di navigazione attraverso un fragment *********************-->
+<nav th:replace="fragments/navigationBar :: topNavigationBar('pictures')"></nav>
+
+<!--***********************************************************************************************-->
+
 <div class="container">
+
+    <!--************************************** SEARCH BAR *****************************************-->
+    <form th:action="@{/pictures}"
+          method="GET"
+          class="d-flex my-3" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search">
+        <button class="btn btn-outline-success" type="submit">Search</button>
+    </form>
     <h1>
         Picture List
     </h1>
     <hr>
-    <div class="card"
-         th:each="picture : ${pictureList}">
-        <h3 th:text="${picture.title}"></h3>
-        <img th:src="${picture.url}" th:alt="${picture.title}">
-        <p th:text="${picture.description}"></p>
+    <!--******************************* ITERIAMO L'OGGETTO CARD PER n IMMAGINI *********************-->
+    <div class="d-flex">
+        <div class="card p-3 mx-3"
+             style="width: 22rem;"
+             th:each="picture : ${pictureList}"
+             th:object="${picture}">
+            <h3 class="text-center my-3"
+                style="height: 5rem;"
+                th:text="*{title}"></h3>
+            <img class="object-fit-contain my-2"
+                 style="height: 10rem;"
+                 th:src="*{url}" th:alt="*{title}">
+            <p th:text="*{description}"
+               style="height: 5rem;"
+               class="overflow-auto">
+            </p>
+            <a class="btn btn-info"
+               style="max-width: 5rem;"
+               th:href="@{pictures/show/{id}(id=*{id})}">
+                <i class="fa-solid fa-eye"></i>
+            </a>
+        </div>
     </div>
+    <!--***********************************************************************************************-->
 </div>
 </body>
 </html>
