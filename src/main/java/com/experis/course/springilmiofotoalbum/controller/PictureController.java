@@ -49,6 +49,7 @@ public class PictureController {
             pictureList = pictureRepository.findAll();
         }
         model.addAttribute("pictureList", pictureList);
+        model.addAttribute("searchKeyword", search.orElse(""));
         return "pictures/list";
     }
 
